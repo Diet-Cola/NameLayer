@@ -118,7 +118,7 @@ public class NameLayerDAO extends ZeusPluginDatabase {
 		}
 		try (Connection insertConn = db.getConnection();
 				PreparedStatement insertAction = insertConn.prepareStatement(
-						"insert into nl_global_actions (name) values(?);", Statement.RETURN_GENERATED_KEYS);) {
+						"insert into nl_global_actions (type_name) values(?);", Statement.RETURN_GENERATED_KEYS);) {
 			insertAction.setString(1, name);
 			insertAction.execute();
 			try (ResultSet rs = insertAction.getGeneratedKeys()) {
@@ -676,7 +676,7 @@ public class NameLayerDAO extends ZeusPluginDatabase {
 		//load action log
 		try (Connection connection = db.getConnection();
 			 PreparedStatement getTypes = connection
-					 .prepareStatement("select ga.name,al.player, al.time, al.rank, al.name, al.extra"
+					 .prepareStatement("select ga.type_name,al.player, al.time, al.rank, al.name, al.extra"
 									 + " from nl_action_log al inner join nl_global_actions ga on al.type_id = ga.type_id " +
 							 		   "where group_id = ?")) {
 			getTypes.setInt(1, id);
