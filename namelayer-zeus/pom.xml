@@ -13,7 +13,7 @@
 
 	<artifactId>namelayer-zeus</artifactId>
 	<packaging>jar</packaging>
-	<name>Namelayer</name>
+	<name>NameLayer</name>
 	<version>3.0.0</version>
 
 	<dependencies>
