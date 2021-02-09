@@ -677,7 +677,7 @@ public class NameLayerDAO extends ZeusPluginDatabase {
 		try (Connection connection = db.getConnection();
 			 PreparedStatement getTypes = connection
 					 .prepareStatement("select ga.name,al.player, al.time, al.rank, al.name, al.extra"
-									 + " from nl_action_log al inner join nl_global_actions ga on al.type_id = ga.id " +
+									 + " from nl_action_log al inner join nl_global_actions ga on al.type_id = ga.type_id " +
 							 		   "where group_id = ?")) {
 			getTypes.setInt(1, id);
 			try (ResultSet types = getTypes.executeQuery()) {
