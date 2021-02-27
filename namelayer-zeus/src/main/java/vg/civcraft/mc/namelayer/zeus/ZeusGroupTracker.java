@@ -33,6 +33,7 @@ import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RemoveMemberMessage;
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RemovePermissionMessage;
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RenameGroupMessage;
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RenameRankMessage;
+import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.UpdateDefaultJoinRankMessage;
 
 public class ZeusGroupTracker extends GroupTracker {
 
@@ -242,6 +243,12 @@ public class ZeusGroupTracker extends GroupTracker {
 
 	public void unBlacklistPlayer(Group group, UUID player) {
 		removePlayerFromGroup(group, player);
+	}
+
+	@Override
+	public void setDefaultJoinRank(Group group, GroupRank targetRank) {
+		super.setDefaultJoinRank(group, targetRank);
+		sendGroupUpdate(group, () -> new UpdateDefaultJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
 	}
 
 	public GroupRank createRank(Group group, String name, GroupRank parent) {

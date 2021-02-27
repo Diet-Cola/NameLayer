@@ -30,6 +30,7 @@ import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.RevokeInviteHand
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.SendGroupChatMessageHandler;
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.SendLocalChatMessageHandler;
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.SendPrivateChatMessageHandler;
+import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.SetDefaultJoinRankHandler;
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.SetPasswordHandler;
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.UnblacklistPlayerHandler;
 import vg.civcraft.mc.namelayer.zeus.rabbit.incoming.groupedits.UnlinkGroupsHandler;
@@ -77,7 +78,7 @@ public class NameLayerZPlugin extends ZeusPlugin {
 				new MergeGroupHandler(), new PromotePlayerHandler(), new RegisterPermissionHandler(),
 				new RejectInviteHandler(), new RemoveMemberHandler(), new RenameGroupHandler(), new RenameRankHandler(),
 				new RevokeInviteHandler(), new SetPasswordHandler(), new UnlinkGroupsHandler(), new ChangeGroupColorHandler(),
-				new SendGroupChatMessageHandler(), new SendLocalChatMessageHandler(),
+				new SendGroupChatMessageHandler(), new SendLocalChatMessageHandler(), new SetDefaultJoinRankHandler(),
 				new SendPrivateChatMessageHandler(), new RequestGroupCacheHandler(), new RegisterMetaDataDefaultHandler(),
 				new UnblacklistPlayerHandler());
 	}

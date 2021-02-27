@@ -341,6 +341,15 @@ commands:
     min-args: 2
     max-args: 2
     player-only: true
+  nlsdjr:
+    aliases:
+      - setjoinrank
+      - setdefaultjoinrank
+    usage: /nlcgc [group] [rank]
+    description: Changes a groups default join rank
+    min-args: 2
+    max-args: 2
+    player-only: true
 permissions:
    namelayer.admin:
       default: op

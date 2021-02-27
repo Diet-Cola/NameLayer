@@ -32,6 +32,7 @@ import vg.civcraft.mc.namelayer.core.requests.RenameRank;
 import vg.civcraft.mc.namelayer.core.requests.RevokeInvite;
 import vg.civcraft.mc.namelayer.core.requests.SendGroupChatMessage;
 import vg.civcraft.mc.namelayer.core.requests.SendPrivateMessage;
+import vg.civcraft.mc.namelayer.core.requests.SetDefaultJoinRank;
 import vg.civcraft.mc.namelayer.core.requests.SetPassword;
 import vg.civcraft.mc.namelayer.core.requests.UnblacklistPlayer;
 import vg.civcraft.mc.namelayer.core.requests.UnlinkGroups;
@@ -50,6 +51,7 @@ import vg.civcraft.mc.namelayer.mc.rabbit.executions.RecacheGroup;
 import vg.civcraft.mc.namelayer.mc.rabbit.executions.RemoveInvite;
 import vg.civcraft.mc.namelayer.mc.rabbit.executions.RemovePermission;
 import vg.civcraft.mc.namelayer.mc.rabbit.executions.SendLocalMessage;
+import vg.civcraft.mc.namelayer.mc.rabbit.executions.UpdateDefaultJoinRank;
 import vg.civcraft.mc.namelayer.mc.rabbit.executions.UpdateMemberRank;
 import vg.civcraft.mc.namelayer.mc.util.NameLayerSettingManager;
 
@@ -87,7 +89,7 @@ public class NameLayerPlugin extends ACivMod {
 				RejectInvite.REPLY_ID, RemoveMember.REPLY_ID, RenameGroup.REPLY_ID, RenameRank.REPLY_ID,
 				RevokeInvite.REPLY_ID, SetPassword.REPLY_ID, UnlinkGroups.REPLY_ID, RegisterPermission.REPLY_ID,
 				SendGroupChatMessage.REPLY_ID, SendPrivateMessage.REPLY_ID, ChangeGroupColor.REPLY_ID,
-				UnblacklistPlayer.REPLY_ID);
+				UnblacklistPlayer.REPLY_ID, SetDefaultJoinRank.REPLY_ID);
 		settingsManager = new NameLayerSettingManager();
 		GroupAPI.registerMetaDataDefault(NameLayerMetaData.CHAT_COLOR_KEY, ChatColor.WHITE.toString());
 		chatTracker = new ChatTracker(settingsManager);
@@ -101,7 +103,7 @@ public class NameLayerPlugin extends ACivMod {
 				new vg.civcraft.mc.namelayer.mc.rabbit.executions.UnlinkGroups(), new UpdateMemberRank(),
 				new vg.civcraft.mc.namelayer.mc.rabbit.executions.SendGroupChatMessage(),
 				new vg.civcraft.mc.namelayer.mc.rabbit.executions.SendPrivateMessage(), new SendLocalMessage(),
-				new GroupMetaDataUpdate(), new AddToActionLog());
+				new GroupMetaDataUpdate(), new AddToActionLog(), new UpdateDefaultJoinRank());
 		new AikarCommandRegistrar(this);
 		registerListener(new ChatListener(this));
 		registerListener(new LoginAnnouncementListener(this));

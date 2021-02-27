@@ -65,6 +65,10 @@ public class GroupTracker {
 	public void renameRank(Group group, GroupRank rank, String newName) {
 		group.getGroupRankHandler().renameRank(rank,newName);
 	}
+
+	public void setDefaultJoinRank(Group group, GroupRank targetRank) {
+		group.getGroupRankHandler().setDefaultInvitationRank(targetRank);
+	}
 	
 	public void setMetaDataValue(Group group, String key, String value) {
 		group.setMetaData(key, value);
