@@ -9,8 +9,10 @@ import vg.civcraft.mc.namelayer.core.log.impl.AddLink;
 import vg.civcraft.mc.namelayer.core.log.impl.AddPermission;
 import vg.civcraft.mc.namelayer.core.log.impl.BlacklistPlayer;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeColor;
+import vg.civcraft.mc.namelayer.core.log.impl.ChangeDefaultJoinRank;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeGroupName;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeMemberRank;
+import vg.civcraft.mc.namelayer.core.log.impl.ChangePasswordJoinRank;
 import vg.civcraft.mc.namelayer.core.log.impl.CreateGroup;
 import vg.civcraft.mc.namelayer.core.log.impl.CreateRank;
 import vg.civcraft.mc.namelayer.core.log.impl.DeleteRank;
@@ -53,8 +55,10 @@ public class GroupActionLogFactory {
 		registerInstanciator(AddPermission.ID, AddPermission::load);
 		registerInstanciator(BlacklistPlayer.ID, BlacklistPlayer::load);
 		registerInstanciator(ChangeColor.ID, ChangeColor::load);
+		registerInstanciator(ChangeDefaultJoinRank.ID, ChangeDefaultJoinRank::load);
 		registerInstanciator(ChangeGroupName.ID, ChangeGroupName::load);
 		registerInstanciator(ChangeMemberRank.ID, ChangeMemberRank::load);
+		registerInstanciator(ChangePasswordJoinRank.ID, ChangePasswordJoinRank::load);
 		registerInstanciator(CreateGroup.ID, CreateGroup::load);
 		registerInstanciator(CreateRank.ID, CreateRank::load);
 		registerInstanciator(DeleteRank.ID, DeleteRank::load);
@@ -69,7 +73,6 @@ public class GroupActionLogFactory {
 		registerInstanciator(RevokeInvite.ID, RevokeInvite::load);
 		registerInstanciator(SetPassword.ID, SetPassword::load);
 		registerInstanciator(UnblacklistPlayer.ID, UnblacklistPlayer::load);
-		
 	}
 	
 	

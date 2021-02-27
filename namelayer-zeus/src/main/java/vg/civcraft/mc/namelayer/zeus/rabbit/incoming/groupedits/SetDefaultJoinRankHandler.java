@@ -9,6 +9,7 @@ import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.GroupRankHandler;
 import vg.civcraft.mc.namelayer.core.PermissionType;
+import vg.civcraft.mc.namelayer.core.log.impl.ChangeDefaultJoinRank;
 import vg.civcraft.mc.namelayer.core.requests.SetDefaultJoinRank;
 
 public class SetDefaultJoinRankHandler extends GroupRequestHandler{
@@ -20,6 +21,7 @@ public class SetDefaultJoinRankHandler extends GroupRequestHandler{
 		}
 		synchronized (group) {
 			GroupRankHandler rankHandler = group.getGroupRankHandler();
+			GroupRank oldDefaultJoinRank = rankHandler.getDefaultInvitationRank();
 			GroupRank targetRank = rankHandler.getRank(data.getInt("target_rank_id"));
 			if (targetRank == null) {
 				sendReject(ticket, SetDefaultJoinRank.REPLY_ID, sendingServer, SetDefaultJoinRank.FailureReason.RANK_DOES_NOT_EXIST);
@@ -37,6 +39,7 @@ public class SetDefaultJoinRankHandler extends GroupRequestHandler{
 				return;
 			}
 			getGroupTracker().setDefaultJoinRank(group, targetRank);
+			getGroupTracker().addLogEntry(group, new ChangeDefaultJoinRank(System.currentTimeMillis(), executor, oldDefaultJoinRank.getName(), targetRank.getName()));
 			sendAccept(ticket, SetDefaultJoinRank.REPLY_ID, sendingServer);
 		}
 	}

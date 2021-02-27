@@ -345,8 +345,16 @@ commands:
     aliases:
       - setjoinrank
       - setdefaultjoinrank
-    usage: /nlcgc [group] [rank]
+    usage: /nlsdjr [group] [rank]
     description: Changes a groups default join rank
+    min-args: 2
+    max-args: 2
+    player-only: true
+  nlspjr:
+    aliases:
+      - setpasswordjoinrank
+    usage: /nlsdjr [group] [rank]
+    description: Changes a groups password join rank
     min-args: 2
     max-args: 2
     player-only: true

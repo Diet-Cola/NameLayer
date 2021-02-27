@@ -36,8 +36,12 @@ public class JoinGroupHandler extends GroupRequestHandler {
 				return;
 			}
 			GroupRank targetType = group.getGroupRankHandler().getDefaultPasswordJoinRank();
+			if (targetType == null) {
+				sendReject(ticket, JoinGroup.REPLY_ID, sendingServer, JoinGroup.FailureReason.NO_JOIN_RANK_SET);
+				return;
+			}
 			Map<String, Object> repValues = new HashMap<>();
-			repValues.put("targetRank", targetType.getId());
+			repValues.put("target_rank", targetType.getId());
 			getGroupTracker().addPlayerToGroup(group, executor, targetType);
 			getGroupTracker().addLogEntry(group, new vg.civcraft.mc.namelayer.core.log.impl.JoinGroup(System.currentTimeMillis(), executor, targetType.getName()));
 			sendAccept(ticket, JoinGroup.REPLY_ID, sendingServer, repValues);

@@ -27,5 +27,5 @@ public final class GroupModifications {
 	public static final String UPDATE_META_DATA = "nl_update_meta_data";
 	public static final String ADD_TO_ACTION_LOG = "nl_add_to_action_log";
 	public static final String UPDATE_DEFAULT_JOIN_RANK = "nl_update_default_join_rank";
-
+	public static final String UPDATE_PASSWORD_JOIN_RANK = "nl_update_password_join_rank";
 }

@@ -1,10 +1,8 @@
 package vg.civcraft.mc.namelayer.mc.rabbit.playerrequests;
 
 import java.util.UUID;
-
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
 import org.json.JSONObject;
-
 import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.GroupRankHandler;
@@ -24,7 +22,7 @@ public class RabbitJoinGroup extends RabbitGroupAction {
 	public void handleReply(JSONObject reply, boolean success) {
 		Group group = getGroup();
 		if (success) {
-			int rankID = reply.getInt("targetRank");
+			int rankID = reply.getInt("target_rank");
 			GroupRankHandler handler = group.getGroupRankHandler();
 			GroupRank targetRank = handler.getRank(rankID);
 			sendMessage(String.format("%sYou have been added to %s%s as a %s%s", ChatColor.GREEN, group.getColoredName(),
@@ -46,6 +44,10 @@ public class RabbitJoinGroup extends RabbitGroupAction {
 			return;
 		case WRONG_PASSWORD:
 			sendMessage(ChatColor.RED + "Wrong password");
+			return;
+		case NO_JOIN_RANK_SET:
+			sendMessage(String.format("%sThe group %s%s has no password join rank set!", ChatColor.RED, group.getColoredName(),
+					ChatColor.RED));
 			return;
 		default:
 			break;

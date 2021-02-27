@@ -34,6 +34,7 @@ import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RemovePermissionMessage
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RenameGroupMessage;
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.RenameRankMessage;
 import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.UpdateDefaultJoinRankMessage;
+import vg.civcraft.mc.namelayer.zeus.rabbit.groupchanges.UpdatePasswordJoinRankMessage;
 
 public class ZeusGroupTracker extends GroupTracker {
 
@@ -249,6 +250,12 @@ public class ZeusGroupTracker extends GroupTracker {
 	public void setDefaultJoinRank(Group group, GroupRank targetRank) {
 		super.setDefaultJoinRank(group, targetRank);
 		sendGroupUpdate(group, () -> new UpdateDefaultJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
+	}
+
+	@Override
+	public void setPasswordJoinRank(Group group, GroupRank targetRank) {
+		super.setPasswordJoinRank(group, targetRank);
+		sendGroupUpdate(group, () -> new UpdatePasswordJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
 	}
 
 	public GroupRank createRank(Group group, String name, GroupRank parent) {

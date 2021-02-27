@@ -8,6 +8,6 @@ public final class JoinGroup {
 	public static final String REPLY_ID = "nl_ans_join_group";
 	
 	public enum FailureReason {
-		GROUP_DOES_NOT_EXIST, WRONG_PASSWORD, GROUP_HAS_NO_PASSWORD, ALREADY_MEMBER_OR_BLACKLISTED;
+		GROUP_DOES_NOT_EXIST, WRONG_PASSWORD, GROUP_HAS_NO_PASSWORD, ALREADY_MEMBER_OR_BLACKLISTED, NO_JOIN_RANK_SET;
 	}
 }

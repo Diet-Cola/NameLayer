@@ -11,27 +11,27 @@ import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.GroupRankHandler;
 import vg.civcraft.mc.namelayer.mc.GroupAPI;
-import vg.civcraft.mc.namelayer.mc.rabbit.playerrequests.RabbitSetDefaultJoinRank;
+import vg.civcraft.mc.namelayer.mc.rabbit.playerrequests.RabbitSetPasswordJoinRank;
 import vg.civcraft.mc.namelayer.mc.util.MsgUtils;
 
-@CivCommand(id = "nlsdjr")
-public class SetDefaultJoinRank extends StandaloneCommand {
+@CivCommand(id = "nlspjr")
+public class SetPasswordJoinRank extends StandaloneCommand {
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
 		Player player = (Player) sender;
 		String groupName = args[0];
 		Group group = GroupAPI.getGroup(groupName);
 		if (group == null) {
-			MsgUtils.sendGroupNotExistMsg(player.getUniqueId(), groupName);
+			MsgUtils.sendGroupNotExistMsg(player.getUniqueId(), args[0]);
 			return true;
 		}
 		GroupRankHandler rankHandler = group.getGroupRankHandler();
 		GroupRank targetRank = rankHandler.getRank(args[1]);
 		if (targetRank == null) {
-			MsgUtils.sendRankNotExistMsg(player.getUniqueId(), groupName, args[1]);
+			MsgUtils.sendRankNotExistMsg(player.getUniqueId(), group.getColoredName(), args[1]);
 			return true;
 		}
-		ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitSetDefaultJoinRank(player.getUniqueId(), groupName, targetRank));
+		ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitSetPasswordJoinRank(player.getUniqueId(), group.getName(), targetRank));
 		return true;
 	}
 
