@@ -239,23 +239,32 @@ public class ZeusGroupTracker extends GroupTracker {
 	}
 
 	public void blacklistPlayer(Group group, UUID player, GroupRank rank) {
-		addPlayerToGroup(group, player, rank);
+		synchronized (group) {
+			addPlayerToGroup(group, player, rank);
+		}
 	}
 
 	public void unBlacklistPlayer(Group group, UUID player) {
-		removePlayerFromGroup(group, player);
+		synchronized (group) {
+			removePlayerFromGroup(group, player);
+		}
+
 	}
 
 	@Override
 	public void setDefaultJoinRank(Group group, GroupRank targetRank) {
-		super.setDefaultJoinRank(group, targetRank);
-		sendGroupUpdate(group, () -> new UpdateDefaultJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
+		synchronized (group) {
+			super.setDefaultJoinRank(group, targetRank);
+			sendGroupUpdate(group, () -> new UpdateDefaultJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
+		}
 	}
 
 	@Override
 	public void setPasswordJoinRank(Group group, GroupRank targetRank) {
-		super.setPasswordJoinRank(group, targetRank);
-		sendGroupUpdate(group, () -> new UpdatePasswordJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
+		synchronized (group) {
+			super.setPasswordJoinRank(group, targetRank);
+			sendGroupUpdate(group, () -> new UpdatePasswordJoinRankMessage(group.getPrimaryId(), targetRank.getId()));
+		}
 	}
 
 	public GroupRank createRank(Group group, String name, GroupRank parent) {

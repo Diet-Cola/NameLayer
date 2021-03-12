@@ -40,6 +40,12 @@ public class SetPasswordJoinRankHandler extends GroupRequestHandler{
 				sendReject(ticket, SetPasswordJoinRank.REPLY_ID, sendingServer, SetPasswordJoinRank.FailureReason.NULL_PASSWORD);
 				return;
 			}
+			if (oldPasswordJoinRank == null) {
+				getGroupTracker().setPasswordJoinRank(group, targetRank);
+				getGroupTracker().addLogEntry(group, new ChangePasswordJoinRank(System.currentTimeMillis(), executor, "No default password join rank set", targetRank.getName()));
+				sendAccept(ticket, SetPasswordJoinRank.REPLY_ID, sendingServer);
+				return;
+			}
 			if (rankHandler.getDefaultPasswordJoinRank() == targetRank) {
 				sendReject(ticket, SetPasswordJoinRank.REPLY_ID, sendingServer, SetPasswordJoinRank.FailureReason.ALREADY_THAT_RANK);
 				return;

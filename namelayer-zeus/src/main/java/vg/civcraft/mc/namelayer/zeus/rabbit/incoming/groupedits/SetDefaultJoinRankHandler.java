@@ -34,7 +34,13 @@ public class SetDefaultJoinRankHandler extends GroupRequestHandler{
 				sendReject(ticket, SetDefaultJoinRank.REPLY_ID, sendingServer, SetDefaultJoinRank.FailureReason.NO_PERMISSION, repValues);
 				return;
 			}
-			if (rankHandler.getDefaultInvitationRank() == targetRank) {
+			if (oldDefaultJoinRank == null) {
+				getGroupTracker().setDefaultJoinRank(group, targetRank);
+				getGroupTracker().addLogEntry(group, new ChangeDefaultJoinRank(System.currentTimeMillis(), executor, "No default join rank set", targetRank.getName()));
+				sendAccept(ticket, SetDefaultJoinRank.REPLY_ID, sendingServer);
+				return;
+			}
+			if (oldDefaultJoinRank.equals(targetRank)) {
 				sendReject(ticket, SetDefaultJoinRank.REPLY_ID, sendingServer, SetDefaultJoinRank.FailureReason.ALREADY_THAT_RANK);
 				return;
 			}
