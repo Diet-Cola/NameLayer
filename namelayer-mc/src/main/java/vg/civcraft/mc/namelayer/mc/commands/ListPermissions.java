@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import vg.civcraft.mc.civmodcore.command.CivCommand;
 import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
+import vg.civcraft.mc.namelayer.core.GroupRankHandler;
 import vg.civcraft.mc.namelayer.core.NameLayerPermissions;
 import vg.civcraft.mc.namelayer.core.PermissionTracker;
 import vg.civcraft.mc.namelayer.core.PermissionType;
@@ -28,7 +29,17 @@ public class ListPermissions extends NameLayerCommand {
 			sender.sendMessage(String.format("%sThe group %s does not exist", ChatColor.RED, args[0]));
 			return true;
 		}
-		GroupRank rank = group.getRank(player.getUniqueId());
+		GroupRankHandler handler = group.getGroupRankHandler();
+		GroupRank rank = null;
+		if (args.length > 1) {
+			rank = handler.getRank(args[1]);
+		} else {
+			rank = group.getRank(player.getUniqueId());
+		}
+		if (rank == null) {
+			player.sendMessage(ChatColor.RED + args[1] + " does not exist for the group " + args[0]);
+			return true;
+		}
 		if (!group.getGroupRankHandler().isMemberRank(rank)) {
 			sender.sendMessage(String.format("%sYou are not a member of %s", ChatColor.RED, group.getColoredName()));
 			return true;
@@ -41,7 +52,7 @@ public class ListPermissions extends NameLayerCommand {
 		}
 		StringBuilder sb = new StringBuilder();
 		sb.append(ChatColor.GREEN);
-		sb.append("You are ");
+		sb.append("Viewing rank ");
 		sb.append(ChatColor.GOLD);
 		sb.append(rank.getName());
 		sb.append(ChatColor.GREEN);

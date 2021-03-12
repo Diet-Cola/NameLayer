@@ -198,10 +198,10 @@ commands:
     aliases:
       - nllistperms
       - listperms
-    usage: /nllp [group]
+    usage: /nllp [group] [rank]
     description: Lists all permissions you have on a group
     min-args: 1
-    max-args: 1
+    max-args: 2
     player-only: true
   nlmg:
     aliases:
