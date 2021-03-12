@@ -238,19 +238,6 @@ public class ZeusGroupTracker extends GroupTracker {
 		}
 	}
 
-	public void blacklistPlayer(Group group, UUID player, GroupRank rank) {
-		synchronized (group) {
-			addPlayerToGroup(group, player, rank);
-		}
-	}
-
-	public void unBlacklistPlayer(Group group, UUID player) {
-		synchronized (group) {
-			removePlayerFromGroup(group, player);
-		}
-
-	}
-
 	@Override
 	public void setDefaultJoinRank(Group group, GroupRank targetRank) {
 		synchronized (group) {

@@ -41,7 +41,7 @@ public class UnblacklistPlayerHandler extends GroupRequestHandler {
 				sendReject(ticket, UnblacklistPlayer.REPLY_ID, sendingServer, UnblacklistPlayer.FailureReason.NO_PERMISSION, repValues);
 				return;
 			}
-			getGroupTracker().unBlacklistPlayer(group, targetPlayer);
+			getGroupTracker().removePlayerFromGroup(group, targetPlayer);
 			getGroupTracker().addLogEntry(group,
 					new vg.civcraft.mc.namelayer.core.log.impl.UnblacklistPlayer(System.currentTimeMillis(), executor,
 							blacklistedRank.getName(), targetPlayer));

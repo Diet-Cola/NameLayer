@@ -3,6 +3,7 @@ package vg.civcraft.mc.namelayer.mc.rabbit.playerrequests;
 import java.util.UUID;
 import net.md_5.bungee.api.ChatColor;
 import org.json.JSONObject;
+import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.requests.UnblacklistPlayer;
 
 public class RabbitUnblacklistPlayer extends RabbitGroupAction {
@@ -16,8 +17,9 @@ public class RabbitUnblacklistPlayer extends RabbitGroupAction {
 
 	@Override
 	public void handleReply(JSONObject reply, boolean success) {
+		Group group = getGroup();
 		if (success) {
-			sendMessage(ChatColor.GREEN + "You have successfully unblacklisted " + targetPlayer + " from " + groupName);
+			sendMessage(ChatColor.GREEN + "You have successfully unblacklisted " + ChatColor.YELLOW + targetPlayer + ChatColor.GREEN + " from " + group.getColoredName());
 			return;
 		}
 		UnblacklistPlayer.FailureReason reason = UnblacklistPlayer.FailureReason.valueOf(reply.getString("reason"));
