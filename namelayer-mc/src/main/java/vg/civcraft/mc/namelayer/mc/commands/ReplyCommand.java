@@ -1,13 +1,10 @@
 package vg.civcraft.mc.namelayer.mc.commands;
 
-import java.util.UUID;
-
-import javax.annotation.Syntax;
-
-import org.bukkit.entity.Player;
-
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Description;
+import java.util.UUID;
+import javax.annotation.Syntax;
+import org.bukkit.entity.Player;
 import vg.civcraft.mc.civmodcore.command.AikarCommand;
 import vg.civcraft.mc.namelayer.mc.NameLayerPlugin;
 import vg.civcraft.mc.namelayer.mc.model.ChatTracker;
@@ -43,6 +40,7 @@ public class ReplyCommand extends AikarCommand {
 			sender.sendMessage(ChatStrings.chatNoOneToReplyTo);
 			return;
 		}
+		this.modeManager.setReplyChannel(recipient, sender.getUniqueId());
 		PrivateChatMode.sendPrivateMessage(sender, recipient, message);
 	}
 
