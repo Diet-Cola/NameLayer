@@ -30,6 +30,7 @@ public class ReplyCommand extends AikarCommand {
 			sender.sendMessage(ChatStrings.chatNoOneToReplyTo);
 			return;
 		}
+		this.modeManager.setReplyChannel(recipient, sender.getUniqueId());
 		this.modeManager.setChatMode(sender, new PrivateChatMode(recipient), true);
 	}
 	

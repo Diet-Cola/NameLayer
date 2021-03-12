@@ -41,6 +41,7 @@ public class PrivateChatCommand extends AikarCommand {
 			sender.sendMessage(ChatStrings.chatRecipientNowOffline);
 			return;
 		}
+		this.modeManager.setReplyChannel(receiverData.getUUID(), sender.getUniqueId());
 		this.modeManager.setChatMode(sender, new PrivateChatMode(receiverData.getUUID()), true);
 	}
 
