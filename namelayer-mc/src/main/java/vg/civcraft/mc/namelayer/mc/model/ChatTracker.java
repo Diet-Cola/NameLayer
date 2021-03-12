@@ -42,6 +42,7 @@ public class ChatTracker {
 		}
 		mode.setInternalStorage(player, settings.getChatModeSetting(), settings.getChatModeValueSetting());
 		chatChannels.put(player.getUniqueId(), mode);
+		updateHUD(player);
 	}
 
 	public void resetChatMode(Player player) {
