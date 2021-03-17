@@ -64,4 +64,39 @@ public class NameLayerPermissionManager {
 		return permTracker.getPermission(NameLayerPermissions.READ_CHAT);
 	}
 
+	public PermissionType getGroupStats() {
+		return permTracker.getPermission(NameLayerPermissions.GROUP_STATS);
+	}
+
+	public PermissionType getPasswordEdit() {
+		return permTracker.getPermission(NameLayerPermissions.PASSWORD);
+	}
+
+	public PermissionType getModifyPerm() {
+		return permTracker.getPermission(NameLayerPermissions.MODIFY_PERMS);
+	}
+
+	public PermissionType getListPerms() {
+		return permTracker.getPermission(NameLayerPermissions.LIST_PERMS);
+	}
+
+	public PermissionType getDeleteGroup() {
+		return permTracker.getPermission(NameLayerPermissions.DELETE_GROUP);
+	}
+
+	public PermissionType getMergeGroup() {
+		return permTracker.getPermission(NameLayerPermissions.MERGE_GROUP);
+	}
+
+	public PermissionType getLinkGroup() {
+		return permTracker.getPermission(NameLayerPermissions.LINK_GROUP);
+	}
+
+	public PermissionType getRenameGroup() {
+		return permTracker.getPermission(NameLayerPermissions.RENAME_GROUP);
+	}
+
+	public PermissionType getChangeGroupColor() {
+		return permTracker.getPermission(NameLayerPermissions.EDIT_GROUP_COLOR);
+	}
 }
