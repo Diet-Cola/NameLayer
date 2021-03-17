@@ -1,10 +1,12 @@
 package vg.civcraft.mc.namelayer.mc.rabbit.playerrequests;
 
+import com.github.maxopoly.artemis.ArtemisPlugin;
+import com.github.maxopoly.artemis.NameAPI;
+import com.github.maxopoly.artemis.rabbit.outgoing.RabbitSendPlayerTextComponent;
 import java.util.UUID;
-
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.json.JSONObject;
-
 import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.requests.PromotePlayer;
@@ -30,6 +32,12 @@ public class RabbitPromotePlayer extends RabbitGroupAction {
 			sendMessage(String.format("%sChanged rank of %s%s%s from %s%s%s to %s%s%s in %s", ChatColor.GREEN, ChatColor.YELLOW,
 				playerName, ChatColor.GREEN, ChatColor.YELLOW, oldRank.getName(),
 				ChatColor.GREEN, ChatColor.YELLOW, targetRank.getName(), ChatColor.GREEN, group.getColoredName()));
+			//Acknowledgement msg
+
+			UUID target = ArtemisPlugin.getInstance().getPlayerDataManager().getOnlinePlayerData(playerName).getUUID();
+			TextComponent message = new TextComponent(String.format("%sYour rank has been changed to %s%s%s in %s%s!", ChatColor.GREEN, ChatColor.YELLOW, targetRank.getName(), ChatColor.GREEN, group.getColoredName(), ChatColor.GREEN));
+			ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitSendPlayerTextComponent(
+					NameAPI.CONSOLE_UUID, target, message));
 			return;	
 		}
 		PromotePlayer.FailureReason reason = PromotePlayer.FailureReason.valueOf(reply.getString("reason"));

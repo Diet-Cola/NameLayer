@@ -1,10 +1,12 @@
 package vg.civcraft.mc.namelayer.mc.rabbit.playerrequests;
 
+import com.github.maxopoly.artemis.ArtemisPlugin;
+import com.github.maxopoly.artemis.NameAPI;
+import com.github.maxopoly.artemis.rabbit.outgoing.RabbitSendPlayerTextComponent;
 import java.util.UUID;
-
-import org.bukkit.ChatColor;
+import net.md_5.bungee.api.ChatColor;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.json.JSONObject;
-
 import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.requests.InvitePlayer;
@@ -33,6 +35,12 @@ public class RabbitInvitePlayer extends RabbitGroupAction {
 			sendMessage(String.format("%s%s %shas been invited as %s%s%s to %s", ChatColor.YELLOW,
 				playerName, ChatColor.GREEN, ChatColor.YELLOW, targetRank.getName(),
 				ChatColor.GREEN, group.getColoredName()));
+			//Acknowledgement msg
+
+			UUID target = ArtemisPlugin.getInstance().getPlayerDataManager().getOnlinePlayerData(playerName).getUUID();
+			TextComponent message = new TextComponent(String.format("%sYou have been invited to %s%s as a %s%s%s!", ChatColor.GREEN, group.getColoredName(), ChatColor.GREEN, ChatColor.YELLOW, targetRank.getName(), ChatColor.GREEN));
+			ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitSendPlayerTextComponent(
+					NameAPI.CONSOLE_UUID, target, message));
 			return;
 		}
 		InvitePlayer.FailureReason reason = InvitePlayer.FailureReason.valueOf(reply.getString("reason"));
