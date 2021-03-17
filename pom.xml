@@ -12,7 +12,7 @@
 
   <groupId>vg.civcraft.mc.namelayer</groupId>
   <artifactId>namelayer-parent</artifactId>
-  <version>3.0.0</version>
+  <version>3.0.1</version>
   <name>NameLayer</name>
   <packaging>pom</packaging>
 

@@ -14,19 +14,19 @@
 	<artifactId>namelayer-zeus</artifactId>
 	<packaging>jar</packaging>
 	<name>NameLayer</name>
-	<version>3.0.0</version>
+	<version>3.0.1</version>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.github.maxopoly</groupId>
 			<artifactId>zeus</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>vg.civcraft.mc.namelayer</groupId>
 			<artifactId>namelayer-core</artifactId>
-			<version>3.0.0</version>
+			<version>3.0.1</version>
 		</dependency>
 	</dependencies>
 
