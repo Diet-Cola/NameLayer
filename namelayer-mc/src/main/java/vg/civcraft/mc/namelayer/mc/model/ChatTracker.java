@@ -42,6 +42,7 @@ public class ChatTracker {
 		}
 		mode.setInternalStorage(player, settings.getChatModeSetting(), settings.getChatModeValueSetting());
 		chatChannels.put(player.getUniqueId(), mode);
+		updateHUD(player);
 	}
 
 	public void resetChatMode(Player player) {
@@ -70,10 +71,10 @@ public class ChatTracker {
 	 * @param sender   The player using the reply command.
 	 * @param receiver The the player that will receive the reply
 	 */
-	public void setReplyChannel(final Player sender, final Player receiver) {
+	public void setReplyChannel(final UUID sender, final UUID receiver) {
 		Preconditions.checkArgument(sender != null, "Sender cannot be null!");
 		Preconditions.checkArgument(receiver != null, "Receiver cannot be null!");
-		this.replyChannels.put(sender.getUniqueId(), receiver.getUniqueId());
+		this.replyChannels.put(sender, receiver);
 	}
 
 	/**

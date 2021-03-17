@@ -14,7 +14,7 @@ public class SendPrivateMessage extends StaticRabbitCommand {
 
 	@Override
 	public void handleRequest(ConnectedServer sendingServer, JSONObject data) {
-		UUID sender = UUID.fromString(data.getString("player"));
+		UUID sender = UUID.fromString(data.getString("sender"));
 		String message = data.getString("message");
 		UUID receiver = UUID.fromString(data.getString("receiver"));
 		PrivateChatMode.showPMToReceiver(sender, receiver, message);

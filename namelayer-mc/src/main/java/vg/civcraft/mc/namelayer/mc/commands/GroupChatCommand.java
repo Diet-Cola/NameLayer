@@ -1,5 +1,7 @@
 package vg.civcraft.mc.namelayer.mc.commands;
 
+import co.aikar.commands.annotation.Optional;
+import com.google.common.base.Strings;
 import java.util.List;
 
 import org.bukkit.entity.Player;
@@ -54,25 +56,18 @@ public class GroupChatCommand extends AikarCommand {
 	}
 
 	@CommandAlias(ALIAS)
-	@CommandCompletion("@writeablegroups")
-	public void switchToGroupChat(final Player sender, final String name) {
-		final Group group = GroupAPI.getGroup(name);
-		if (group == null) {
-			sender.sendMessage(ChatStrings.chatGroupNotFound);
-			return;
-		}
-		this.modeManager.setChatMode(sender, new GroupChatMode(group.getPrimaryId()), true);
-	}
-
-	@CommandAlias(ALIAS)
 	@CommandCompletion("@writeablegroups @nothing")
-	public void sendOneOffMessageToGroup(final Player sender, final String name, final String message) {
+	public void switchToGroupChat(final Player sender, final String name, @Optional final String message) {
 		final Group group = GroupAPI.getGroup(name);
 		if (group == null) {
 			sender.sendMessage(ChatStrings.chatGroupNotFound);
 			return;
 		}
-		GroupChatMode.sendGroupMessage(sender, group, message);
+		if (Strings.isNullOrEmpty(message)) {
+			this.modeManager.setChatMode(sender, new GroupChatMode(group.getPrimaryId()), true);
+		} else {
+			GroupChatMode.sendGroupMessage(sender, group, message);
+		}
 	}
 
 	@TabComplete("writeablegroups")

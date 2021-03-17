@@ -25,7 +25,7 @@ public class PrivateChatMode implements ChatMode {
 
 	@Override
 	public String getInfoText() {
-		return ChatColor.AQUA + "PM with " + NameAPI.getName(partner);
+		return ChatColor.AQUA + "PM with " + NameAPI.getNameLocal(partner);
 	}
 
 	@Override

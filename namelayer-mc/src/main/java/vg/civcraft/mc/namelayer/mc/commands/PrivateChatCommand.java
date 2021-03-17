@@ -1,5 +1,7 @@
 package vg.civcraft.mc.namelayer.mc.commands;
 
+import co.aikar.commands.annotation.Optional;
+import com.google.common.base.Strings;
 import org.bukkit.entity.Player;
 
 import com.github.maxopoly.artemis.ArtemisPlugin;
@@ -34,25 +36,19 @@ public class PrivateChatCommand extends AikarCommand {
 	}
 
 	@CommandAlias(ALIAS)
-	@CommandCompletion("@players")
-	public void switchToPrivateChat(final Player sender, final String name) {
+	@CommandCompletion("@players @nothing")
+	public void switchToPrivateChat(final Player sender, final String name, @Optional final String message) {
 		final PlayerData receiverData = ArtemisPlugin.getInstance().getPlayerDataManager().getOnlinePlayerData(name);
 		if (receiverData == null) {
 			sender.sendMessage(ChatStrings.chatRecipientNowOffline);
 			return;
 		}
-		this.modeManager.setChatMode(sender, new PrivateChatMode(receiverData.getUUID()), true);
-	}
-
-	@CommandAlias(ALIAS)
-	@CommandCompletion("@players @none")
-	public void sendOneOffPrivateMessage(final Player sender, final String name, final String message) {
-		final PlayerData receiverData = ArtemisPlugin.getInstance().getPlayerDataManager().getOnlinePlayerData(name);
-		if (receiverData == null) {
-			sender.sendMessage(ChatStrings.chatRecipientNowOffline);
-			return;
+		if (Strings.isNullOrEmpty(message)) {
+			this.modeManager.setReplyChannel(receiverData.getUUID(), sender.getUniqueId());
+			this.modeManager.setChatMode(sender, new PrivateChatMode(receiverData.getUUID()), true);
+		} else {
+			this.modeManager.setReplyChannel(receiverData.getUUID(), sender.getUniqueId());
+			PrivateChatMode.sendPrivateMessage(sender, receiverData.getUUID(), message);
 		}
-		PrivateChatMode.sendPrivateMessage(sender, receiverData.getUUID(), message);
 	}
-
 }
