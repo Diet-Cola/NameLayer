@@ -203,18 +203,18 @@ commands:
     min-args: 1
     max-args: 1
     player-only: true
-  nlmg:
-    aliases:
-      - nlmergegroups
-      - nlmerge
-      - mergegroup
-      - mergegroups
-      - merge
-    usage: /nlmg [groupToKeep] [groupToRemove]
-    description: Merges a group into a different one, transferring all blocks tied to it over
-    min-args: 2
-    max-args: 2
-    player-only: true
+#  nlmg:
+#    aliases:
+#      - nlmergegroups
+#      - nlmerge
+#      - mergegroup
+#      - mergegroups
+#      - merge
+#    usage: /nlmg [groupToKeep] [groupToRemove]
+#    description: Merges a group into a different one, transferring all blocks tied to it over
+#    min-args: 2
+#    max-args: 2
+#    player-only: true
   nlmp:
     aliases:
       - nlmodifyperms

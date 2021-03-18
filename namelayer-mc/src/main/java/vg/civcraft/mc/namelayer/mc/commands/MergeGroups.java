@@ -20,6 +20,12 @@ public class MergeGroups extends StandaloneCommand {
 
 	@Override
 	public boolean execute(CommandSender sender, String[] args) {
+		if (true) {
+			//We're gonna disable this command until we properly handle secondary group ID's, at the time of the removal of this command
+			//the secondary ids aren't saved and groups merged after restart do not properly point to the new group id.
+			sender.sendMessage("Command disabled.");
+			return true;
+		}
 		Player player = (Player) sender;
 		Group groupToKeep = GroupAPI.getGroup(args[0]);
 		if (groupToKeep == null) {
