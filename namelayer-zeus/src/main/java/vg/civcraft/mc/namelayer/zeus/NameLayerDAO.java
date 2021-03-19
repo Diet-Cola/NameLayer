@@ -698,6 +698,20 @@ public class NameLayerDAO extends ZeusPluginDatabase {
 		} catch (SQLException e) {
 			logger.error("Failed to load group action log: ", e);
 		}
+		//load secondary ids
+		try (Connection connection = db.getConnection();
+			 PreparedStatement getTypes = connection
+					 .prepareStatement("select old_group_id from nl_merged_groups where new_group_id = ?")) {
+			getTypes.setInt(1, id);
+			try (ResultSet rs = getTypes.executeQuery()) {
+				while (rs.next()) {
+					int groupID = rs.getInt(1);
+					group.addSecondaryId(groupID);
+				}
+			}
+		} catch (SQLException e) {
+			logger.error("Failed to load group secondary ids: ", e);
+		}
 		return group;
 	}
 	public void setGroupMetaData(Group group, String key, String value) {
