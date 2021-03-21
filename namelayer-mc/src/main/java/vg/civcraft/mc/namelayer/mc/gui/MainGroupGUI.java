@@ -5,6 +5,7 @@ import com.github.maxopoly.artemis.ArtemisPlugin;
 import com.github.maxopoly.artemis.NameAPI;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -82,13 +83,14 @@ public class MainGroupGUI {
 	public void showScreen() {
 		if (inventory == null) {
 			inventory = new ComponableInventory(ChatColor.GOLD + group.getName(), 6, player);
-			inventory.addComponent(getBottomBar(), SlotPredicates.offsetRectangle(1, 9, 5, 0));
 		} else {
 			inventory.removeComponent(contentComponent);
 		}
+		inventory.clear();
 		List<IClickable> clicks = constructContent();
 		this.contentComponent = new Scrollbar(clicks, 45);
-		inventory.addComponent(contentComponent, SlotPredicates.rows(5));
+		inventory.addComponent(contentComponent, i -> true);
+		inventory.addComponent(getBottomBar(), SlotPredicates.offsetRectangle(1, 9, 5, 0));
 		inventory.show();
 	}
 
@@ -98,11 +100,11 @@ public class MainGroupGUI {
 		bottomBar.set(getAddBlackListClickable(), 1);
 		bottomBar.set(getVisibilityMenuClickable(), 2);
 		bottomBar.set(getLeaveGroupClickable(), 3);
-		bottomBar.set(getInfoStack(), 4);
+		bottomBar.set(getSuperMenuClickable(), 4);
 		bottomBar.set(getDefaultGroupClickable(), 5);
-		// edit ranks 6
+		bottomBar.set(getRankManageClickable(), 6);
 		bottomBar.set(getAdminStuffClickable(), 7);
-		bottomBar.set(getSuperMenuClickable(), 8);
+		bottomBar.set(getInfoStack(), 8);
 		return bottomBar;
 	}
 
@@ -142,7 +144,7 @@ public class MainGroupGUI {
 			}
 		}
 		if (sortByRank) {
-			Collections.sort(ranks, (r1, r2) -> r1.getName().compareTo(r2.getName()));
+			Collections.sort(ranks, Comparator.comparing(GroupRank::getName));
 		}
 		for (GroupRank rank : ranks) {
 			if (rank == rankHandler.getDefaultNonMemberRank()) {
@@ -163,7 +165,7 @@ public class MainGroupGUI {
 				IClickable click;
 				if (canModify) {
 					ItemUtils.addLore(is, "", ChatColor.AQUA + "Click to modify");
-					click = new LClickable(is, p -> handlePlayerClick(rank, uuid));
+					click = new LClickable(is, p -> handlePlayerClick());
 				} else {
 					click = new DecorationStack(is);
 				}
@@ -191,17 +193,16 @@ public class MainGroupGUI {
 			}
 			if (!sortByRank) {
 				// sort by member name, which is included in the items name
-				Collections.sort(tempList, (i1, i2) -> i1.getItemStack().getItemMeta().getDisplayName()
-						.compareTo(i2.getItemStack().getItemMeta().getDisplayName()));
+				tempList.sort(Comparator.comparing(i -> i.getItemStack().getItemMeta().getDisplayName()));
 			}
 			result.addAll(tempList);
 		}
 		return result;
 	}
 
-	private void handlePlayerClick(GroupRank rank, UUID victimPlayer) {
-		//TODO
-		showScreen();
+	private void handlePlayerClick() {
+		RankManageGUI rankGUI = new RankManageGUI(group, player, this);
+		rankGUI.showScreen();
 	}
 
 	private void handleInviteClick(GroupRank rank, UUID playerInviteIsFor) {
@@ -268,8 +269,14 @@ public class MainGroupGUI {
 	}
 
 	private IClickable getSuperMenuClickable() {
-		return new LClickable(Material.DIAMOND, ChatColor.GOLD + "Return to overview for all your groups", p -> {
+		return new LClickable(Material.PAINTING, ChatColor.GOLD + "Return to overview for all your groups", p -> {
 			showParent();
+		});
+	}
+
+	private IClickable getRankManageClickable() {
+		return new LClickable(Material.BOOKSHELF, ChatColor.GOLD + "Manage ranks for this group", p -> {
+			handlePlayerClick();
 		});
 	}
 
@@ -296,7 +303,7 @@ public class MainGroupGUI {
 	 */
 	private Clickable getLeaveGroupClickable() {
 		return new LClickable(Material.IRON_DOOR, ChatColor.GOLD + "Leave group", p -> {
-			ComponableSection yesNoSec = CommonGUIs.genConfirmationGUI(3, 9, () -> {
+			ComponableSection yesNoSec = CommonGUIs.genConfirmationGUI(5, 9, () -> {
 				ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitLeaveGroup(p.getUniqueId(), group));
 				showParent();
 			}, String.format("%sYes, leave %s", ChatColor.GREEN, group.getColoredName()), () -> {

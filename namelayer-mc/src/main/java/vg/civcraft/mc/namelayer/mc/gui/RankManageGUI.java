@@ -3,6 +3,7 @@ package vg.civcraft.mc.namelayer.mc.gui;
 import java.util.ArrayList;
 import java.util.List;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
@@ -11,6 +12,8 @@ import vg.civcraft.mc.civmodcore.inventorygui.LClickable;
 import vg.civcraft.mc.civmodcore.inventorygui.components.ComponableInventory;
 import vg.civcraft.mc.civmodcore.inventorygui.components.ContentAligners;
 import vg.civcraft.mc.civmodcore.inventorygui.components.Scrollbar;
+import vg.civcraft.mc.civmodcore.inventorygui.components.SlotPredicates;
+import vg.civcraft.mc.civmodcore.inventorygui.components.StaticDisplaySection;
 import vg.civcraft.mc.namelayer.core.Group;
 import vg.civcraft.mc.namelayer.core.GroupRank;
 import vg.civcraft.mc.namelayer.core.GroupRankHandler;
@@ -18,6 +21,7 @@ import vg.civcraft.mc.namelayer.core.GroupRankHandler;
 public class RankManageGUI {
 
 	private ComponableInventory inventory;
+	private StaticDisplaySection bottomBar;
 	private MainGroupGUI parent;
 	private Group group;
 	private Player player;
@@ -52,9 +56,11 @@ public class RankManageGUI {
 			}
 			content.add(new LClickable(is, p -> detailEdit(rank)));
 		}
-		Scrollbar rankSection = new Scrollbar(content, 45, 45, ContentAligners.getCenteredInOrder(content.size(), 45));
+		Scrollbar rankSection = new Scrollbar(content, 45, 45, ContentAligners.getLeftAligned());
 		inventory.clear();
 		inventory.addComponent(rankSection, i -> true);
+		inventory.addComponent(getBottomBar(), SlotPredicates.offsetRectangle(1, 9, 5, 0));
+		inventory.show();
 	}
 
 	private void detailEdit(GroupRank rank) {
@@ -65,4 +71,15 @@ public class RankManageGUI {
 		//perms?
 	}
 
+	private StaticDisplaySection getBottomBar() {
+		bottomBar = new StaticDisplaySection(9);
+		bottomBar.set(getSuperMenuClickable(), 4);
+		return bottomBar;
+	}
+
+	private IClickable getSuperMenuClickable() {
+		return new LClickable(Material.DIAMOND, ChatColor.GOLD + "Return to overview for all your groups", p -> {
+			parent.showScreen();
+		});
+	}
 }

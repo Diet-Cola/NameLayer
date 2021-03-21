@@ -6,6 +6,7 @@ import java.util.List;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import vg.civcraft.mc.civmodcore.chat.dialog.Dialog;
 import vg.civcraft.mc.civmodcore.inventory.items.ItemUtils;
 import vg.civcraft.mc.civmodcore.inventorygui.ClickableInventory;
@@ -54,6 +55,7 @@ public class AdminFunctionsGUI {
 		display.set(getLinkingClickable(), 30);
 		display.set(getMergingClickable(), 32);
 		display.set(getDeletingClickable(), 34);
+		display.set(getBackButton(), 49);
 	}
 
 	public void showScreen() {
@@ -66,9 +68,10 @@ public class AdminFunctionsGUI {
 	}
 
 	private IClickable getRenamingClickable() {
-		return permissionWrap(new LClickable(Material.OAK_SIGN,
+		return permissionWrap(new LClickable(Material.NAME_TAG,
 				String.format("%sRename %s", ChatColor.GOLD, group.getColoredName()), p -> {
 			ClickableInventory.forceCloseInventory(p);
+			p.sendMessage(String.format("%sEnter the name you wish to change %s%s to or type \"cancel\" to leave this prompt", ChatColor.GREEN, group.getColoredName(), ChatColor.GREEN));
 			new Dialog(p, NameLayerPlugin.getInstance()) {
 
 				@Override
@@ -78,8 +81,21 @@ public class AdminFunctionsGUI {
 
 				@Override
 				public void onReply(String[] message) {
+					if (message.length > 1) {
+						p.sendMessage(ChatColor.RED + "Group names cannot have spaces");
+						showScreen();
+						this.end();
+						return;
+					}
+					String cancel = message[0];
+					if (cancel.equals("cancel")) {
+						showScreen();
+						this.end();
+						return;
+					}
 					ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitRenameGroup(p.getUniqueId(), group, String.join(" ", message)));
 					showScreen();
+					this.end();
 				}
 			};
 		}), permMan.getRenameGroup());
@@ -101,36 +117,37 @@ public class AdminFunctionsGUI {
 				public void onReply(String[] message) {
 					if (message.length > 1) {
 						p.sendMessage(ChatColor.RED + "Colors cannot have spaces");
-						this.end();
 						showScreen();
+						this.end();
 						return;
 					}
 					try {
 						ChatColor color = ChatColor.of(String.join(" ", message).toUpperCase());
 					} catch (IllegalArgumentException ex) {
 						p.sendMessage(ChatColor.RED + "That is not a valid color!");
-						this.end();
 						showScreen();
+						this.end();
 						return;
 					}
 					String cancel = message[0];
 					if (cancel.equals("cancel")) {
-						this.end();
 						showScreen();
+						this.end();
 						return;
 					}
 					ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitChangeGroupColor(p.getUniqueId(), group.getName(), ChatColor.of(String.join(" ", message).toUpperCase())));
-					this.end();
 					showScreen();
+					this.end();
 				}
 			};
 		}), permMan.getChangeGroupColor());
 	}
 
 	private IClickable getChangePasswordClickable() {
-		return permissionWrap(new LClickable(Material.GOLD_INGOT,
+		return permissionWrap(new LClickable(Material.OAK_SIGN,
 				String.format("%sSet the password for %s", ChatColor.GOLD, group.getColoredName()), p -> {
 			ClickableInventory.forceCloseInventory(p);
+			p.sendMessage(String.format("%sEnter the password you wish to set for %s%s or type \"cancel\" to leave this prompt", ChatColor.GREEN, group.getColoredName(), ChatColor.GREEN));
 			new Dialog(p, NameLayerPlugin.getInstance()) {
 
 				@Override
@@ -140,6 +157,18 @@ public class AdminFunctionsGUI {
 
 				@Override
 				public void onReply(String[] message) {
+					if (message.length > 1) {
+						p.sendMessage(ChatColor.RED + "Passwords cannot have spaces");
+						showScreen();
+						this.end();
+						return;
+					}
+					String cancel = message[0];
+					if (cancel.equals("cancel")) {
+						showScreen();
+						this.end();
+						return;
+					}
 					ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitSetGroupPassword(p.getUniqueId(), group, String.join(" ", message)));
 					this.end();
 					showScreen();
@@ -158,7 +187,7 @@ public class AdminFunctionsGUI {
 	}
 
 	private IClickable getLinkingClickable() {
-		return permissionWrap(new LClickable(Material.GOLD_INGOT,
+		return permissionWrap(new LClickable(Material.CHAIN,
 				String.format("%sView existing group links and link %s%s to another group", ChatColor.GOLD,
 						group.getColoredName(), ChatColor.GOLD),
 				p -> {
@@ -183,7 +212,7 @@ public class AdminFunctionsGUI {
 	}
 
 	private IClickable getDeletingClickable() {
-		return permissionWrap(new LClickable(Material.SPONGE,
+		return permissionWrap(new LClickable(Material.BARRIER,
 				String.format("%sDelete %s%s permanently", ChatColor.GOLD, group.getColoredName(), ChatColor.GOLD),
 				p -> {
 					ComponableSection confirm = CommonGUIs.genConfirmationGUI(6, 9, () -> {
@@ -196,8 +225,15 @@ public class AdminFunctionsGUI {
 					}, ChatColor.RED + "No, go back");
 					inventory.clear();
 					inventory.addComponent(confirm, i -> true);
+					inventory.show();
 				}), permMan.getDeleteGroup());
-
 	}
 
+	private IClickable getBackButton() {
+		ItemStack backToOverview = new ItemStack(Material.ARROW);
+		ItemUtils.setDisplayName(backToOverview, ChatColor.GOLD + "Go back to previous menu");
+		return new  LClickable(backToOverview, p -> {
+			parent.showScreen();
+		});
+	}
 }

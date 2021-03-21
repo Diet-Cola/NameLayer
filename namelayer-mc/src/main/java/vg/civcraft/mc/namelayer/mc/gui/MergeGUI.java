@@ -32,6 +32,7 @@ public class MergeGUI {
 		this.group = g;
 		this.player = p;
 		this.parent = parent;
+		this.inventory = parent.getInventory();
 	}
 
 	public void showScreen() {
@@ -53,7 +54,7 @@ public class MergeGUI {
 		display.set(new LClickable(mergeOtherIntoThisStack, p -> {
 			mergeIntoThisGroup = true;
 			showMergeGroupSelector();
-		}), 26);
+		}), 24);
 
 		// exit button
 		ItemStack backToOverview = new ItemStack(Material.ARROW);

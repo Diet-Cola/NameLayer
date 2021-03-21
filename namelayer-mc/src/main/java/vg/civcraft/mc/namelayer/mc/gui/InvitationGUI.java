@@ -83,6 +83,7 @@ public class InvitationGUI {
 					}
 				}
 				parent.showScreen();
+				this.end();
 			}
 
 			public List<String> onTabComplete(String word, String[] msg) {
