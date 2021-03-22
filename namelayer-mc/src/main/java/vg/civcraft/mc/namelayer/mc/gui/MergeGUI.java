@@ -97,6 +97,7 @@ public class MergeGUI {
 				}, ChatColor.RED + "No, cancel merging");
 			}));
 		}
+		inventory.clear();
 		Scrollbar groupScroll = new Scrollbar(clicks, 45);
 		inventory.addComponent(groupScroll, i -> true);
 		StaticDisplaySection section = new StaticDisplaySection(9);

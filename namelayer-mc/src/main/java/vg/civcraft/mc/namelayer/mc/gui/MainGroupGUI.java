@@ -86,9 +86,9 @@ public class MainGroupGUI {
 		} else {
 			inventory.removeComponent(contentComponent);
 		}
-		inventory.clear();
 		List<IClickable> clicks = constructContent();
 		this.contentComponent = new Scrollbar(clicks, 45);
+		inventory.clear();
 		inventory.addComponent(contentComponent, i -> true);
 		inventory.addComponent(getBottomBar(), SlotPredicates.offsetRectangle(1, 9, 5, 0));
 		inventory.show();
@@ -206,6 +206,10 @@ public class MainGroupGUI {
 	}
 
 	private void handleInviteClick(GroupRank rank, UUID playerInviteIsFor) {
+		if (playerInviteIsFor == null) {
+			showScreen();
+			return;
+		}
 		ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitRevokeInvite(player.getUniqueId(), group, NameAPI.getNameLocal(playerInviteIsFor)));
 		showScreen();
 	}

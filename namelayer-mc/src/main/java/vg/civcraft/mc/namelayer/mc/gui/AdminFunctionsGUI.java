@@ -122,16 +122,17 @@ public class AdminFunctionsGUI {
 						this.end();
 						return;
 					}
-					try {
-						ChatColor color = ChatColor.of(String.join(" ", message).toUpperCase());
-					} catch (IllegalArgumentException ex) {
-						p.sendMessage(ChatColor.RED + "That is not a valid color!");
+					String cancel = message[0];
+					if (cancel.equals("cancel")) {
+						p.sendMessage(ChatColor.RED + "Cancelled changing group color");
 						showScreen();
 						this.end();
 						return;
 					}
-					String cancel = message[0];
-					if (cancel.equals("cancel")) {
+					try {
+						ChatColor color = ChatColor.of(String.join(" ", message).toUpperCase());
+					} catch (IllegalArgumentException ex) {
+						p.sendMessage(ChatColor.RED + "That is not a valid color!");
 						showScreen();
 						this.end();
 						return;
@@ -218,7 +219,7 @@ public class AdminFunctionsGUI {
 				p -> {
 					ComponableSection confirm = CommonGUIs.genConfirmationGUI(6, 9, () -> {
 						ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitDeleteGroup(player.getUniqueId(), group.getName()));
-						parent.showScreen();
+						ClickableInventory.forceCloseInventory(p);
 					}, String.format("%s%sYes, delete %s%s%s permanently", ChatColor.RED, ChatColor.BOLD,
 							group.getColoredName(), ChatColor.RED, ChatColor.BOLD), () -> {
 						reconstruct();

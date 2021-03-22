@@ -78,7 +78,7 @@ public class RankManageGUI {
 	}
 
 	private IClickable getSuperMenuClickable() {
-		return new LClickable(Material.DIAMOND, ChatColor.GOLD + "Return to overview for all your groups", p -> {
+		return new LClickable(Material.ARROW, ChatColor.GOLD + "Return to the previous screen", p -> {
 			parent.showScreen();
 		});
 	}
