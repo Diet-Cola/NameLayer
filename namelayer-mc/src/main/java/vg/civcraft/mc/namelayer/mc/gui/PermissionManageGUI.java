@@ -66,18 +66,27 @@ public class PermissionManageGUI {
 		List<PermissionType> perms = new ArrayList<>(NameLayerPlugin.getInstance().getGroupTracker().getPermissionTracker().getAllPermissions());
 		boolean canEdit = GroupAPI.hasPermission(player, group, NameLayerPlugin.getInstance().getNameLayerPermissionManager().getModifyPerm());
 		for (PermissionType perm : perms) {
-			boolean hasPerm = GroupAPI.hasPermission(player, group, perm);
+			boolean hasPerm = rank.hasPermission(perm);
 			Material mat = hasPerm ? Material.GREEN_DYE : Material.RED_DYE;
 			ItemStack is = new ItemStack(mat);
 			ItemUtils.setDisplayName(is, perm.getName());
 			ItemUtils.addLore(is, perm.getDescription());
 			if (canEdit) {
-				content.add(new LClickable(is, p -> {
-					//Fix adding/remove
-					ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitEditPermission(p.getUniqueId(), group, true, rank, perm));
-					reconstruct();
-					detailEdit(rank);
-				}));
+				if (hasPerm) {
+					content.add(new LClickable(is, p -> {
+						ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitEditPermission(p.getUniqueId(), group, false, rank, perm));
+						is.setType(Material.RED_DYE);
+						reconstruct();
+						detailEdit(rank);
+					}));
+				} else {
+					content.add(new LClickable(is, p -> {
+						ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitEditPermission(p.getUniqueId(), group, true, rank, perm));
+						is.setType(Material.GREEN_DYE);
+						reconstruct();
+						detailEdit(rank);
+					}));
+				}
 			} else {
 				content.add(new DecorationStack(is));
 			}

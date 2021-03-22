@@ -94,6 +94,7 @@ public class AdminFunctionsGUI {
 						return;
 					}
 					ArtemisPlugin.getInstance().getRabbitHandler().sendMessage(new RabbitRenameGroup(p.getUniqueId(), group, String.join(" ", message)));
+					inventory.setName(ChatColor.GOLD + String.join(" ", message));
 					showScreen();
 					this.end();
 				}

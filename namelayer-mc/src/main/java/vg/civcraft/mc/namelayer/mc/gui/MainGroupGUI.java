@@ -263,6 +263,7 @@ public class MainGroupGUI {
 							ChatColor.GREEN, defGroup.getColoredName(), ChatColor.GREEN, group.getColoredName()));
 				}
 				defGroupSetting.setGroup(player, group);
+				inventory.clear();
 				showScreen();
 			});
 		}
