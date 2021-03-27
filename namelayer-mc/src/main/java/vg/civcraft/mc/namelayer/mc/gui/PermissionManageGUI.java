@@ -65,7 +65,7 @@ public class PermissionManageGUI {
 		inventory.show();
 	}
 
-	private void detailEdit(GroupRank rank) {
+	public void detailEdit(GroupRank rank) {
 		List<IClickable> content = new ArrayList<>();
 		List<PermissionType> perms = new ArrayList<>(NameLayerPlugin.getInstance().getGroupTracker().getPermissionTracker().getAllPermissions());
 		boolean canEdit = GroupAPI.hasPermission(player, group, NameLayerPlugin.getInstance().getNameLayerPermissionManager().getModifyPerm());

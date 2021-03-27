@@ -3,7 +3,6 @@ package vg.civcraft.mc.namelayer.core.log.abstr;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
-
 import vg.civcraft.mc.namelayer.core.log.impl.AcceptInvitation;
 import vg.civcraft.mc.namelayer.core.log.impl.AddLink;
 import vg.civcraft.mc.namelayer.core.log.impl.AddPermission;
@@ -11,6 +10,7 @@ import vg.civcraft.mc.namelayer.core.log.impl.BlacklistPlayer;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeColor;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeGroupName;
 import vg.civcraft.mc.namelayer.core.log.impl.ChangeMemberRank;
+import vg.civcraft.mc.namelayer.core.log.impl.ChangeRankName;
 import vg.civcraft.mc.namelayer.core.log.impl.CreateGroup;
 import vg.civcraft.mc.namelayer.core.log.impl.CreateRank;
 import vg.civcraft.mc.namelayer.core.log.impl.DeleteRank;
@@ -58,6 +58,7 @@ public class GroupActionLogFactory {
 		registerInstanciator(CreateGroup.ID, CreateGroup::load);
 		registerInstanciator(CreateRank.ID, CreateRank::load);
 		registerInstanciator(DeleteRank.ID, DeleteRank::load);
+		registerInstanciator(ChangeRankName.ID, ChangeRankName::load);
 		registerInstanciator(InviteMember.ID, InviteMember::load);
 		registerInstanciator(JoinGroup.ID, JoinGroup::load);
 		registerInstanciator(LeaveGroup.ID, LeaveGroup::load);

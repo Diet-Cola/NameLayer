@@ -165,11 +165,13 @@ public class GUIGroupOverview {
 	private IClickable getMoveItemClickable() {
 		if (movingMode) {
 			return new LClickable(Material.RED_BANNER, ChatColor.GOLD + "Exit reordering mode", p -> {
+				p.sendMessage(ChatColor.YELLOW + "Exiting reordering mode");
 				movingMode = false;
 				bottomBar.set(getMoveItemClickable(), 3);
 			});
 		}
 		return new LClickable(Material.MAGENTA_BANNER, ChatColor.GOLD + "Enter reordering mode", p -> {
+			p.sendMessage(ChatColor.YELLOW + "Entering reordering mode");
 			movingMode = true;
 			bottomBar.set(getMoveItemClickable(), 3);
 		});

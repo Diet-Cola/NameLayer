@@ -38,6 +38,7 @@ public class GroupFolder extends FolderElement{
 				return;
 			}
 			gui.setViewedFolder(this);
+			gui.showScreen();
 		});
 	}
 }

@@ -99,4 +99,12 @@ public class NameLayerPermissionManager {
 	public PermissionType getChangeGroupColor() {
 		return permTracker.getPermission(NameLayerPermissions.EDIT_GROUP_COLOR);
 	}
+
+	public PermissionType getDeleteRank() {
+		return permTracker.getPermission(NameLayerPermissions.DELETE_RANK);
+	}
+
+	public PermissionType getRenameRank() {
+		return permTracker.getPermission(NameLayerPermissions.RENAME_RANK);
+	}
 }
